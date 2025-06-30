@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mythikz - Collection de Cartes</title>
+    <title>Mythkiz - Collection de Cartes</title>
     <style>
         * {
             margin: 0;
@@ -353,13 +353,16 @@
         .card.legendary { border-color: #f39c12; }
 
         .card-image {
-            width: 100%;
-            height: 150px;
-            border-radius: 5px;
-            margin-bottom: 10px;
-            object-fit: cover;
-            background: #f0f0f0;
-        }
+  width: 100%;
+  height: auto; /* au lieu de height: 150px */
+  max-height: 300px; /* facultatif, pour éviter que ce soit trop long */
+  border-radius: 5px;
+  margin-bottom: 10px;
+  object-fit: contain;
+  background: #f0f0f0;
+  display: block;
+}
+
 
         .card-name {
             font-weight: bold;
@@ -485,12 +488,17 @@
             flex-wrap: wrap;
             margin-bottom: 20px;
         }
+
+        .modal .card-image {
+            height: 120px; /* Plus petit dans le modal */
+            object-fit: contain;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>🎴 Mythikz</h1>
+            <h1>🎴 Mythkiz</h1>
             <p>Collectionnez, échangez, dominez !</p>
         </div>
 
@@ -637,24 +645,65 @@
         const cardDatabase = [
             // Exemple avec vos liens d'images - REMPLACEZ PAR VOS VRAIES DONNÉES
             // Common cards
-            { id: 1, name: "Votre Carte 1", rarity: "common", image: "https://votre-site.com/carte1.jpg" },
-            { id: 2, name: "Votre Carte 2", rarity: "common", image: "https://votre-site.com/carte2.jpg" },
-            { id: 3, name: "Votre Carte 3", rarity: "common", image: "https://votre-site.com/carte3.jpg" },
-            { id: 4, name: "Votre Carte 4", rarity: "common", image: "https://votre-site.com/carte4.jpg" },
-            { id: 5, name: "Votre Carte 5", rarity: "common", image: "https://votre-site.com/carte5.jpg" },
-            
+            { id: 2, name: "Mcfly & Carlito", rarity: "common", image: "https://i.ibb.co/k2v2KKRG/S1-002.png" },
+            { id: 3, name: "Inoxtag", rarity: "common", image: "https://i.ibb.co/S7mnZkQx/S1-003.png" },
+            { id: 8, name: "Mastu", rarity: "common", image: "https://i.ibb.co/qFjwdPYR/S1-008.png" },
+            { id: 13, name: "Amine", rarity: "common", image: "https://i.ibb.co/p5gyZZr/S1-013.png" },
+            { id: 14, name: "Doigby", rarity: "common", image: "https://i.ibb.co/Mky77bGx/S1-014.png" },
+            { id: 16, name: "Wankil Studio", rarity: "common", image: "https://i.ibb.co/hFvVdKMT/S1-016.png" },
+            { id: 18, name: "Michou", rarity: "common", image: "https://i.ibb.co/X6MHSxp/S1-018.png" },
+            { id: 20, name: "Kameto", rarity: "common", image: "https://i.ibb.co/mV7Scg4f/S1-020.png" },
+            { id: 21, name: "Étoiles", rarity: "common", image: "https://i.ibb.co/mCXsJWqJ/S1-021.png" },
+            { id: 27, name: "Olivier Minne", rarity: "common", image: "https://i.ibb.co/VWPPLzNY/S1-027.png" },
+            { id: 28, name: "Djilsi", rarity: "common", image: "https://i.ibb.co/F4F9cwJ2/S1-028.png" },
+            { id: 29, name: "Merde", rarity: "common", image: "https://i.ibb.co/TMbfSNVg/S1-029.png" },
+            { id: 36, name: "Bilal Hassani", rarity: "common", image: "https://i.ibb.co/s9Sn8CMR/S1-036.png" },
+            { id: 49, name: "Jean-Paul Rouve", rarity: "common", image: "https://i.ibb.co/27PdNKYJ/S1-049.png" },
+
+            // Uncommun cards
+            { id: 5, name: "Amixem", rarity: "uncommun", image: "https://i.ibb.co/b59R4q29/S1-005.png" },
+            { id: 10, name: "CyrilMP4", rarity: "uncommun", image: "https://i.ibb.co/RkpkZCJ7/S1-010.png" },
+            { id: 11, name: "FuzeIII", rarity: "uncommun", image: "https://i.ibb.co/mCCngBsp/S1-011.png" },
+            { id: 15, name: "ZeratoR", rarity: "uncommun", image: "https://i.ibb.co/QWgfn5b/S1-015.png" },
+            { id: 19, name: "Byilhan", rarity: "uncommun", image: "https://i.ibb.co/20VTm9ZR/S1-019.png" },
+            { id: 24, name: "Rewind de Twitch", rarity: "uncommun", image: "https://i.ibb.co/SDCsYt2R/S1-024.png" },
+            { id: 37, name: "Napoléon Bonaparte", rarity: "uncommun", image: "https://i.ibb.co/F4FLW18z/S1-037.png" },
+            { id: 45, name: "Julien Doré", rarity: "uncommun", image: "https://i.ibb.co/zTBZMQ8F/S1-045.png" },
+            { id: 46, name: "Jean Dujardin", rarity: "uncommun", image: "https://i.ibb.co/Mkb3SBZp/S1-046.png" },
+
             // Rare cards
-            { id: 6, name: "Votre Carte Rare 1", rarity: "rare", image: "https://votre-site.com/carte-rare1.jpg" },
-            { id: 7, name: "Votre Carte Rare 2", rarity: "rare", image: "https://votre-site.com/carte-rare2.jpg" },
-            { id: 8, name: "Votre Carte Rare 3", rarity: "rare", image: "https://votre-site.com/carte-rare3.jpg" },
-            
+            { id: 1, name: "Squeezie", rarity: "rare", image: "https://i.ibb.co/b5JNS8CY/S1-001.png" },
+            { id: 22, name: "Étoiles", rarity: "rare", image: "https://i.ibb.co/XPCd4LD/S1-022.png" },
+            { id: 23, name: "Domingo", rarity: "rare", image: "https://i.ibb.co/93WTZgyP/S1-023.png" },
+            { id: 30, name: "Natoo", rarity: "rare", image: "https://i.ibb.co/M4CbgV7/S1-030.png" },
+            { id: 31, name: "McFly", rarity: "rare", image: "https://i.ibb.co/SXSctKRC/S1-031.png" },
+            { id: 32, name: "Carlito", rarity: "rare", image: "https://i.ibb.co/hxLjPKQN/S1-032.png" },
+            { id: 33, name: "Thomas Pesquet", rarity: "rare", image: "https://i.ibb.co/ch2dF7fZ/S1-033.png" },
+            { id: 39, name: "Cyril Féraud", rarity: "rare", image: "https://i.ibb.co/7N4cf6gF/S1-039.png" },
+            { id: 40, name: "JuL", rarity: "rare", image: "https://i.ibb.co/N6W9jTXP/S1-040.png" },
+            { id: 50, name: "Jeff Tuche", rarity: "rare", image: "https://i.ibb.co/bRWQndSv/S1-050.png" },
+
             // Epic cards
-            { id: 9, name: "Votre Carte Épique 1", rarity: "epic", image: "https://votre-site.com/carte-epic1.jpg" },
-            { id: 10, name: "Votre Carte Épique 2", rarity: "epic", image: "https://votre-site.com/carte-epic2.jpg" },
+            { id: 7, name: "Joyca", rarity: "epic", image: "https://i.ibb.co/35J1cg7F/S1-007.png" },
+            { id: 12, name: "Squeezie", rarity: "epic", image: "https://i.ibb.co/XxVn5ht4/S1-012.png" },
+            { id: 34, name: "Neil Armstrong", rarity: "epic", image: "https://i.ibb.co/KjQXDXY5/S1-034.png" },
+            { id: 35, name: "Danielou", rarity: "epic", image: "https://i.ibb.co/qLqT5nZv/S1-035.png" },
+            { id: 41, name: "Jean-Luc Reichmann", rarity: "epic", image: "https://i.ibb.co/TMfLQWZn/S1-041.png" },
+            { id: 42, name: "Émilien", rarity: "epic", image: "https://i.ibb.co/YTQdkh3x/S1-042.png" },
             
             // Legendary cards
-            { id: 11, name: "Votre Carte Légendaire 1", rarity: "legendary", image: "https://votre-site.com/carte-legendary1.jpg" },
-            { id: 12, name: "Votre Carte Légendaire 2", rarity: "legendary", image: "https://votre-site.com/carte-legendary2.jpg" }
+            { id: 4, name: "Inoxtag", rarity: "legendary", image: "https://i.ibb.co/VYxgyJsN/S1-004.png" },
+            { id: 17, name: "Thomas Deseur", rarity: "legendary", image: "https://i.ibb.co/Y7ByWTXm/S1-017.png" },
+            { id: 25, name: "Xavier Dupont de Ligonnès & Marine Le Pen en Algérie", rarity: "legendary", image: "https://i.ibb.co/8npMnzc7/S1-025.png" },
+            { id: 38, name: "Karine Le Marchand", rarity: "legendary", image: "https://i.ibb.co/m50Jx8Xw/S1-038.png" },
+            { id: 43, name: "Gilles Bouleau", rarity: "legendary", image: "https://i.ibb.co/TMLxFSjw/S1-043.png" },
+            { id: 44, name: "Squeezie", rarity: "legendary", image: "https://i.ibb.co/DfZBXQv0/S1-044.png" },
+            { id: 47, name: "Brice de Nice", rarity: "legendary", image: "https://i.ibb.co/nNT6M0v5/S1-047.png" },
+            { id: 48, name: "Hubert Bonisseur de la Bath", rarity: "legendary", image: "https://i.ibb.co/nqRyksfH/S1-048.png" },
+
+            // Divine
+            { id: 9, name: "Anyme", rarity: "divine", image: "https://i.ibb.co/r2WnG11P/S1-009.png" },
+            { id: 26, name: "Montcuq", rarity: "divine", image: "https://i.ibb.co/rRpTq5Zp/S1-026.png" },
         ];
 
         // Game state
@@ -666,24 +715,24 @@
             { 
                 name: "Booster Commun", 
                 rarity: "common", 
-                probability: 0.6,
-                cardProbabilities: { common: 0.8, rare: 0.15, epic: 0.04, legendary: 0.01 },
+                probability: 0.8,
+                cardProbabilities: { common: 0.5, uncommon: 0.3, rare: 0.15, epic: 0.04, legendary: 0.01 },
                 icon: "📦",
                 gradient: "linear-gradient(45deg, #95a5a6, #7f8c8d)"
             },
             { 
                 name: "Booster Rare", 
                 rarity: "rare", 
-                probability: 0.25,
-                cardProbabilities: { common: 0.5, rare: 0.35, epic: 0.12, legendary: 0.03 },
+                probability: 0.1,
+                cardProbabilities: { common: 0.4, uncommon: 0.2, rare: 0.25, epic: 0.12, legendary: 0.03 },
                 icon: "✨",
                 gradient: "linear-gradient(45deg, #3498db, #2980b9)"
             },
             { 
                 name: "Booster Épique", 
                 rarity: "epic", 
-                probability: 0.12,
-                cardProbabilities: { common: 0.3, rare: 0.4, epic: 0.25, legendary: 0.05 },
+                probability: 0.07,
+                cardProbabilities: { common: 0.3, uncommon: 0.3, rare: 0.1, epic: 0.25, legendary: 0.05 },
                 icon: "💎",
                 gradient: "linear-gradient(45deg, #9b59b6, #8e44ad)"
             },
@@ -691,7 +740,7 @@
                 name: "Booster Légendaire", 
                 rarity: "legendary", 
                 probability: 0.03,
-                cardProbabilities: { common: 0.2, rare: 0.3, epic: 0.35, legendary: 0.15 },
+                cardProbabilities: { common: 0.2, uncommon: 0.2, rare: 0.2, epic: 0.25, legendary: 0.12, divine: 0.03 },
                 icon: "👑",
                 gradient: "linear-gradient(45deg, #f39c12, #e67e22)"
             }
@@ -715,7 +764,7 @@
                 return;
             }
 
-            const users = JSON.parse(localStorage.getItem('Mythikz_users') || '{}');
+            const users = JSON.parse(localStorage.getItem('Mythkiz_users') || '{}');
             
             if (users[username] && users[username].password === password) {
                 currentUser = username;
@@ -752,7 +801,7 @@
                 return;
             }
 
-            const users = JSON.parse(localStorage.getItem('Mythikz_users') || '{}');
+            const users = JSON.parse(localStorage.getItem('Mythkiz_users') || '{}');
             
             if (users[username]) {
                 alert('Ce nom d\'utilisateur existe déjà !');
@@ -768,7 +817,7 @@
                 lastBoosterTime: 0
             };
 
-            localStorage.setItem('Mythikz_users', JSON.stringify(users));
+            localStorage.setItem('Mythkiz_users', JSON.stringify(users));
             
             currentUser = username;
             gameData = users[username];
@@ -782,7 +831,7 @@
                 loadAdminPanel();
             }
             
-            alert('Compte créé avec succès ! Bienvenue dans Mythikz !');
+            alert('Compte créé avec succès ! Bienvenue dans Mythkiz !');
         }
 
         function logout() {
@@ -842,7 +891,7 @@
         function loadAdminPanel() {
             if (currentUser !== 'MaximeBertin') return;
 
-            const users = JSON.parse(localStorage.getItem('Mythikz_users') || '{}');
+            const users = JSON.parse(localStorage.getItem('Mythkiz_users') || '{}');
             const usersList = document.getElementById('users-list');
             usersList.innerHTML = '';
 
@@ -900,21 +949,21 @@
         }
 
         function giveBoosters(username, amount) {
-            const users = JSON.parse(localStorage.getItem('Mythikz_users') || '{}');
+            const users = JSON.parse(localStorage.getItem('Mythkiz_users') || '{}');
             if (users[username]) {
                 users[username].availableBoosters = Math.min(2, (users[username].availableBoosters || 0) + amount);
-                localStorage.setItem('Mythikz_users', JSON.stringify(users));
+                localStorage.setItem('Mythkiz_users', JSON.stringify(users));
                 loadAdminPanel();
                 alert(`${amount} booster(s) donné(s) à ${username} !`);
             }
         }
 
         function resetCooldown(username) {
-            const users = JSON.parse(localStorage.getItem('Mythikz_users') || '{}');
+            const users = JSON.parse(localStorage.getItem('Mythkiz_users') || '{}');
             if (users[username]) {
                 users[username].lastBoosterTime = 0;
                 users[username].availableBoosters = 2;
-                localStorage.setItem('Mythikz_users', JSON.stringify(users));
+                localStorage.setItem('Mythkiz_users', JSON.stringify(users));
                 loadAdminPanel();
                 alert(`Cooldown réinitialisé pour ${username} !`);
             }
@@ -924,11 +973,11 @@
             showConfirmModal(
                 `Êtes-vous sûr de vouloir réinitialiser la collection de ${username} ? Cette action est irréversible !`,
                 () => {
-                    const users = JSON.parse(localStorage.getItem('Mythikz_users') || '{}');
+                    const users = JSON.parse(localStorage.getItem('Mythkiz_users') || '{}');
                     if (users[username]) {
                         users[username].cards = [];
                         users[username].boostersOpened = 0;
-                        localStorage.setItem('Mythikz_users', JSON.stringify(users));
+                        localStorage.setItem('Mythkiz_users', JSON.stringify(users));
                         loadAdminPanel();
                         alert(`Collection de ${username} réinitialisée !`);
                     }
@@ -940,14 +989,14 @@
             showConfirmModal(
                 'Êtes-vous sûr de vouloir réinitialiser TOUTES les collections ? Cette action est irréversible !',
                 () => {
-                    const users = JSON.parse(localStorage.getItem('Mythikz_users') || '{}');
+                    const users = JSON.parse(localStorage.getItem('Mythkiz_users') || '{}');
                     Object.keys(users).forEach(username => {
                         if (username !== 'MaximeBertin') {
                             users[username].cards = [];
                             users[username].boostersOpened = 0;
                         }
                     });
-                    localStorage.setItem('Mythikz_users', JSON.stringify(users));
+                    localStorage.setItem('Mythkiz_users', JSON.stringify(users));
                     loadAdminPanel();
                     alert('Toutes les collections ont été réinitialisées !');
                 }
@@ -955,7 +1004,7 @@
         }
 
         function giveBoostersToAll() {
-            const users = JSON.parse(localStorage.getItem('Mythikz_users') || '{}');
+            const users = JSON.parse(localStorage.getItem('Mythkiz_users') || '{}');
             let count = 0;
             Object.keys(users).forEach(username => {
                 if (username !== 'MaximeBertin') {
@@ -964,13 +1013,13 @@
                     count++;
                 }
             });
-            localStorage.setItem('Mythikz_users', JSON.stringify(users));
+            localStorage.setItem('Mythkiz_users', JSON.stringify(users));
             loadAdminPanel();
             alert(`2 boosters donnés à ${count} utilisateur(s) !`);
         }
 
         function exportUserData() {
-            const users = JSON.parse(localStorage.getItem('Mythikz_users') || '{}');
+            const users = JSON.parse(localStorage.getItem('Mythkiz_users') || '{}');
             const exportData = {};
             
             Object.keys(users).forEach(username => {
@@ -990,7 +1039,7 @@
             const url = URL.createObjectURL(dataBlob);
             const link = document.createElement('a');
             link.href = url;
-            link.download = 'Mythikz_users_data.json';
+            link.download = 'Mythkiz_users_data.json';
             link.click();
         }
 
@@ -1205,8 +1254,7 @@
             cardDiv.className = `card ${card.rarity}`;
             
             cardDiv.innerHTML = `
-                <img src="${card.image}" alt="${card.name}" class="card-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="card-image" style="display: none; background: #f0f0f0; align-items: center; justify-content: center; font-size: 2em;">🎴</div>
+                <img src="${card.image}" alt="${card.name}" class="card-image" onerror="this.src='https://via.placeholder.com/300x450?text=Image+manquante';">
                 <div class="card-name">${card.name}</div>
                 <div class="card-rarity ${card.rarity}">${card.rarity}</div>
                 ${showCount && card.count > 1 ? `<div style="font-weight: bold; color: #667eea;">x${card.count}</div>` : ''}
@@ -1232,13 +1280,13 @@
 
         // Data persistence
         function saveGameData() {
-            const users = JSON.parse(localStorage.getItem('Mythikz_users') || '{}');
+            const users = JSON.parse(localStorage.getItem('Mythkiz_users') || '{}');
             users[currentUser] = gameData;
-            localStorage.setItem('Mythikz_users', JSON.stringify(users));
+            localStorage.setItem('Mythkiz_users', JSON.stringify(users));
         }
 
         function loadGameData() {
-            const users = JSON.parse(localStorage.getItem('Mythikz_users') || '{}');
+            const users = JSON.parse(localStorage.getItem('Mythkiz_users') || '{}');
             if (currentUser && users[currentUser]) {
                 gameData = users[currentUser];
             }
